@@ -43,6 +43,11 @@ final class ContactInfo{
         
     }
     
+    /**
+     * create instance
+     *
+     * @return void
+     */
     public static function get_instance() {
         
         if( is_null( self::$instance ) ){
