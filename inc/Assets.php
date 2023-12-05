@@ -25,9 +25,8 @@ class Assets{
         wp_enqueue_style(
             'ci-style',                                    // handle
             plugins_url( 'lib/css/style.css', __FILE__ ),  // source
-            [''],                                          // dependencies
+            [],                                            // dependencies
             CI_VERSION,                                    // version
-            'all'                                          // media
         );
 
         // load scripts
@@ -50,9 +49,8 @@ class Assets{
         wp_enqueue_style(
             'ci-style',                                          // handle
             plugins_url( 'lib/admin/css/style.css', __FILE__ ),  // source
-            [''],                                                // dependencies
+            [],                                                  // dependencies
             CI_VERSION,                                          // version
-            'all'                                                // media
         );
 
         // load scripts
