@@ -61,11 +61,23 @@ class Contacts{
     /**
      * get all the contact list
      *
-     * @param [type] $request
-     * @return void
+     * @param [type (array)] $request
+     * @return $request
      */
     public function get_items( $request ){
+
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'contact_info';
+        
+        $sql = "SELECT * FROM $table";
+
+        $results = $wpdb->get_results( $sql );
+
+        $request = $results;
+        
         return $request;
+        
     }
     
     
