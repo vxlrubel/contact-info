@@ -26,7 +26,7 @@ final class ContactInfo{
 }
 
 if( ! function_exists( 'contact_info' )){
-    
+
     function contact_info(){
         return ContactInfo::get_instance();
     }
