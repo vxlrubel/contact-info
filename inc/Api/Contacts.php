@@ -2,7 +2,7 @@
 
 namespace Contact\Inc\Api;
 use WP_REST_Server;
-
+use WP_REST_Controller;
 // directly access denied
 defined('ABSPATH') || exit;
 
@@ -15,7 +15,7 @@ defined('ABSPATH') || exit;
  * @link https://github.com/vxlrubel
  */
 
-class Contacts{
+class Contacts extends WP_REST_Controller{
 
     public function __construct(){
 
@@ -42,10 +42,42 @@ class Contacts{
                     'methods'             => WP_REST_Server::READABLE,
                     'callback'            => [ $this, 'get_items' ],
                     'permission_callback' => [ $this, 'get_items_permission_check' ],
-                ]
+                ],
+                [
+                    'methods'             => WP_REST_Server::CREATABLE,
+                    'callback'            => [ $this, 'insert_item' ],
+                    'permission_callback' => [ $this, 'get_items_permission_check' ],
+                ],
             ]
         );
         
+    }
+
+    public function insert_item( $request ){
+        global $wpdb;
+
+        $table = $wpdb->prefix . 'contact_info';
+
+        $params = $request->get_params();
+
+        $name  = sanitize_text_field( $params['name'] );
+        $email = sanitize_email( $params['email'] );
+        $phone = sanitize_text_field( $params['phone'] );
+        
+        $data = [
+            'name'    => $name,
+            'email'   => $email,
+            'phone'   => $phone,
+        ];
+        
+        $insert_result = $wpdb->insert( $table, $data );
+
+        if( $insert_result === false ){
+            return new WP_Error( 'failed_insert', 'Failed to insert data', [ 'status' => 500 ] );
+        }
+
+        return 'Data inserted successfully';
+
     }
 
     /**
