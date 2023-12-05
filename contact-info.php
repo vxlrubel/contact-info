@@ -34,7 +34,20 @@ final class ContactInfo{
      */
     public function define_constant(){
 
+        // define plugin version
         define( 'CI_VERSION', $this->version );
+
+        // define frontend style source
+        define( 'CI_FRONTEND_STYLE', plugins_url( 'lib/css/style.css', __FILE__) );
+        
+        // define frontend custom script
+        define( 'CI_FRONTEND_SCRIPT', plugins_url( 'lib/js/custom.js', __FILE__) );
+
+        // define admin style source
+        define( 'CI_ADMIN_STYLE', plugins_url( 'lib/admin/css/style.css', __FILE__) );
+        
+        // define admin custom script
+        define( 'CI_ADMIN_SCRIPT', plugins_url( 'lib/admin/js/custom.js', __FILE__) );
         
     }
     
