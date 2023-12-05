@@ -38,7 +38,7 @@ class Assets{
             CI_VERSION,                 // version
             true                        // in_footer
         );
-        
+
     }
 
     /**
@@ -63,6 +63,17 @@ class Assets{
             ['jquery'],                     // dependencies
             CI_VERSION,                     // version
             true                            // in_footer
+        );
+
+        $data = [
+            'rest_url' => esc_url_raw( rest_url() ),
+            'nonce'    => 'ci_rest_nonce'
+        ];
+        
+        wp_localize_script( 
+            'ci-admin-script',   // handle
+            'ci',                // object
+            $data                // data
         );
 
     }
