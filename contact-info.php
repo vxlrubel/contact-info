@@ -8,7 +8,7 @@ Author: Rubel Mahmud ( Sujan )
 
 defined('ABSPATH') || exit;
 
-
+require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 
 final class ContactInfo{
 
