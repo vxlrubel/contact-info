@@ -11,6 +11,13 @@ defined('ABSPATH') || exit;
 require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 
 use Contact\Inc\Assets;
+use Contact\Inc\Api\Api as Contact_Api;
+
+/**
+ * create ContactInfo class
+ * @version 1.0
+ * @author Rubel Mahmud (Sujan)
+ */
 
 final class ContactInfo{
 
@@ -19,12 +26,66 @@ final class ContactInfo{
     // define plugin version
     public $version = '1.0';
 
+    // table name
+    private $table = 'contact_info';
+
     public function __construct(){
         // define constant
         $this->define_constant();
 
         // load scripts file for frontend and dashboard
         new Assets;
+
+        // initiate contact api
+        new Contact_Api;
+
+        // create table called contact_info
+        register_activation_hook( __FILE__, [ $this, 'create_table_contact_info' ] );
+    }
+
+    /**
+     * create database table
+     *
+     * @return void
+     */
+    public function create_table_contact_info(){
+        
+        global $wpdb;
+
+        $table = $this->get_table();
+
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $query = "CREATE TABLE IF NOT EXISTS $table(
+            id MEDIUMINT(9) NOT NULL AUTO_INCREMENT,
+            name VARCHAR(30) NOT NULL DEFAULT 'John Doe',
+            email VARCHAR(55) NOT NULL UNIQUE,
+            phone BIGINT(12) NOT NULL UNIQUE,
+            website VARCHAR(100),
+            address VARCHAR(255),
+            message TEXT(255) DEFAULT 'Default text message',
+            created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+            PRIMARY KEY  (id)
+        ) $charset_collate;";
+        
+        require_once ABSPATH . 'wp-admin/includes/upgrade.php';
+
+        dbDelta( $query );
+
+    }
+
+    /**
+     * get table name
+     *
+     * @return void
+     */
+    protected function get_table(){
+        
+        global $wpdb;
+        $table = $wpdb->prefix . $this->table;
+
+        return $table;
     }
 
     /**
