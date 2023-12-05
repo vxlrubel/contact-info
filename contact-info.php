@@ -8,12 +8,31 @@ Author: Rubel Mahmud ( Sujan )
 
 defined('ABSPATH') || exit;
 
+
+
 final class ContactInfo{
 
     private static $instance;
 
+    // define plugin version
+    public $version = '1.0';
 
+    public function __construct(){
+        // define constant
+        $this->define_constant();
+    }
 
+    /**
+     * define constant
+     *
+     * @return void
+     */
+    public function define_constant(){
+
+        define( 'CI_VERSION', $this->version );
+        
+    }
+    
     public function get_instance() {
         
         if( is_null( self::$instance ) ){
