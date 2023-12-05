@@ -24,7 +24,7 @@ class Assets{
         // load style
         wp_enqueue_style(
             'ci-style',                                    // handle
-            plugins_url( 'lib/css/style.css', __FILE__ ),  // source
+            CI_FRONTEND_STYLE,                             // source
             [],                                            // dependencies
             CI_VERSION,                                    // version
         );
@@ -32,7 +32,7 @@ class Assets{
         // load scripts
         wp_enqueue_script( 
             'ci-script',                                   // handle
-            plugins_url( 'lib/js/custom.js', __FILE__ ),   // source
+            CI_FRONTEND_SCRIPT,                            // source
             ['jquery'],                                    // dependencies
             CI_VERSION,                                    // version
             true                                           // in_footer
@@ -47,19 +47,19 @@ class Assets{
     public function register_admin_scripts(){
         // load style
         wp_enqueue_style(
-            'ci-style',                                          // handle
-            plugins_url( 'lib/admin/css/style.css', __FILE__ ),  // source
-            [],                                                  // dependencies
-            CI_VERSION,                                          // version
+            'ci-admin-style',    // handle
+            CI_ADMIN_STYLE,      // source
+            [],                  // dependencies
+            CI_VERSION,          // version
         );
 
         // load scripts
         wp_enqueue_script( 
-            'ci-script',                                         // handle
-            plugins_url( 'lib/admin/js/custom.js', __FILE__ ),   // source
-            ['jquery'],                                          // dependencies
-            CI_VERSION,                                          // version
-            true                                                 // in_footer
+            'ci-admin-script',      // handle
+            CI_ADMIN_SCRIPT,        // source
+            ['jquery'],             // dependencies
+            CI_VERSION,             // version
+            true                    // in_footer
         );
     }
     
