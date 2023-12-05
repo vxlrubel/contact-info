@@ -10,6 +10,8 @@ defined('ABSPATH') || exit;
 
 require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 
+use Contact\Inc\Assets;
+
 final class ContactInfo{
 
     private static $instance;
@@ -20,6 +22,9 @@ final class ContactInfo{
     public function __construct(){
         // define constant
         $this->define_constant();
+
+        // load scripts file for frontend and dashboard
+        new Assets;
     }
 
     /**
