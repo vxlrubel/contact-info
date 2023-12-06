@@ -104,6 +104,26 @@ if ( ! class_exists('WP_List_Table') ){
         // Your logic to delete a contact
 
         print_r( $contact_id );
+        
     }
+
+    public function column_name($item) {
+        $actions = array(
+            'edit' => sprintf('<a href="?page=%s&action=%s&contact=%s">Edit</a>', $_REQUEST['page'], 'edit', $item['id']),
+            'delete' => sprintf('<a href="?page=%s&action=%s&contact=%s">Delete</a>', $_REQUEST['page'], 'delete', $item['id']),
+            // Add more row actions as needed
+        );
+
+        return sprintf('%1$s <span style="display:none;">%2$s</span>%3$s',
+            $item['name'],
+            $this->row_actions($actions),
+            $this->handle_row_actions($item, 'name', $actions)
+        );
+    }
+    
+
+
+
+    
     
  }
