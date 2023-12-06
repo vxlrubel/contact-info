@@ -191,6 +191,17 @@ class Contacts extends WP_REST_Controller{
         return $request;
         
     }
+
+    /**
+     * get database table name
+     *
+     * @return void
+     */
+    private function get_table(){
+        global $wpdb;
+        $table = $wpdb->prefix . 'contact_info';
+        return $table;
+    }
     
     
 }
