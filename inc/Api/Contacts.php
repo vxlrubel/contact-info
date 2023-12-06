@@ -73,26 +73,58 @@ class Contacts extends WP_REST_Controller{
     }
 
     /**
-     * delete item
+     * insert item into database
      *
      * @param [type] $request
      * @return string
      */
-    public function delete_item( $request ){
+    public function insert_item( $request ){
         global $wpdb;
-        $table  = $this->get_table();
-        $id     = (int)$request['id'];
 
-        $where_clause        = [ 'id' => $id ];
-        $where_clause_format = ['%d'];
+        $table = $this->get_table();
+
+        $params = $request->get_params();
+
+        $name  = sanitize_text_field( $params['name'] );
+        $email = sanitize_email( $params['email'] );
+        $phone = sanitize_text_field( $params['phone'] );
         
-        $delete_result = $wpdb->delete( $table, $where_clause, $where_clause_format );
+        $data = [
+            'name'    => $name,
+            'email'   => $email,
+            'phone'   => $phone,
+        ];
+        
+        $insert_result = $wpdb->insert( $table, $data );
 
-        if ( $delete_result === false ){
-            return new WP_Error('failed_delete', 'Failed to delete data', array('status' => 500));
+        if( $insert_result === false ){
+            return new WP_Error( 'failed_insert', 'Failed to insert data', [ 'status' => 500 ] );
         }
 
-        return 'delete data successfully';
+        return 'Data inserted successfully';
+
+    }
+    
+    /**
+     * get all the contact list
+     *
+     * @param [type (array)] $request
+     * @return $request
+     */
+    public function get_items( $request ){
+
+        global $wpdb;
+
+        $table = $this->get_table();
+        
+        $sql = "SELECT * FROM $table ORDER BY id DESC";
+
+        $results = $wpdb->get_results( $sql );
+
+        $request = $results;
+        
+        return $request;
+        
     }
 
     /**
@@ -132,40 +164,29 @@ class Contacts extends WP_REST_Controller{
 
         return 'data update successfully';
 
-        
     }
 
     /**
-     * insert item into database
+     * delete item
      *
      * @param [type] $request
      * @return string
      */
-    public function insert_item( $request ){
+    public function delete_item( $request ){
         global $wpdb;
+        $table  = $this->get_table();
+        $id     = (int)$request['id'];
 
-        $table = $this->get_table();
-
-        $params = $request->get_params();
-
-        $name  = sanitize_text_field( $params['name'] );
-        $email = sanitize_email( $params['email'] );
-        $phone = sanitize_text_field( $params['phone'] );
+        $where_clause        = [ 'id' => $id ];
+        $where_clause_format = ['%d'];
         
-        $data = [
-            'name'    => $name,
-            'email'   => $email,
-            'phone'   => $phone,
-        ];
-        
-        $insert_result = $wpdb->insert( $table, $data );
+        $delete_result = $wpdb->delete( $table, $where_clause, $where_clause_format );
 
-        if( $insert_result === false ){
-            return new WP_Error( 'failed_insert', 'Failed to insert data', [ 'status' => 500 ] );
+        if ( $delete_result === false ){
+            return new WP_Error('failed_delete', 'Failed to delete data', array('status' => 500));
         }
 
-        return 'Data inserted successfully';
-
+        return 'delete data successfully';
     }
 
     /**
@@ -178,27 +199,6 @@ class Contacts extends WP_REST_Controller{
         return $permission;
     }
 
-    /**
-     * get all the contact list
-     *
-     * @param [type (array)] $request
-     * @return $request
-     */
-    public function get_items( $request ){
-
-        global $wpdb;
-
-        $table = $this->get_table();
-        
-        $sql = "SELECT * FROM $table ORDER BY id DESC";
-
-        $results = $wpdb->get_results( $sql );
-
-        $request = $results;
-        
-        return $request;
-        
-    }
 
     /**
      * get database table name
