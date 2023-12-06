@@ -102,7 +102,7 @@ class Contacts extends WP_REST_Controller{
 
         $table = $wpdb->prefix . 'contact_info';
         
-        $sql = "SELECT * FROM $table";
+        $sql = "SELECT * FROM $table ORDER BY id DESC";
 
         $results = $wpdb->get_results( $sql );
 
