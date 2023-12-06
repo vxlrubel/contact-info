@@ -85,15 +85,7 @@ class Contacts extends WP_REST_Controller{
 
         $params = $request->get_params();
 
-        $name  = sanitize_text_field( $params['name'] );
-        $email = sanitize_email( $params['email'] );
-        $phone = sanitize_text_field( $params['phone'] );
-        
-        $data = [
-            'name'    => $name,
-            'email'   => $email,
-            'phone'   => $phone,
-        ];
+        $data = $this->table_data( $params['name'], $params['email'], $params['phone'], $params['website'], $params['address'], $params['message'] );
         
         $insert_result = $wpdb->insert( $table, $data );
 
@@ -139,18 +131,9 @@ class Contacts extends WP_REST_Controller{
         $params = $request->get_params();
         $id     = (int)$request['id'];
 
-        $name  = sanitize_text_field( $params['name'] );
-        $email = sanitize_email( $params['email'] );
-        $phone = sanitize_text_field( $params['phone'] );
-        
+        $data = $this->table_data( $params['name'], $params['email'], $params['phone'], $params['website'], $params['address'], $params['message'] );
 
-        $data = [
-            'name'  => $name,
-            'email' => $email,
-            'phone' => $phone,
-        ];
-
-        $data_format = [ '%s', '%s', '%s' ];
+        $data_format = [ '%s', '%s', '%s', '%s', '%s', '%s' ];
 
         $where_id = [ 'id' => $id ];
 
@@ -209,6 +192,33 @@ class Contacts extends WP_REST_Controller{
         global $wpdb;
         $table = $wpdb->prefix . 'contact_info';
         return $table;
+    }
+
+
+    /**
+     * diclare table data
+     *
+     * @param string $name
+     * @param [type] $email
+     * @param [type] $phone
+     * @param string $website_url
+     * @param string $address
+     * @param string $message
+     * 
+     * @return array $data
+     */
+    protected function table_data( $name = '', $email, $phone, $website_url = '', $address = '', $message = '' ){
+      
+        $data = [
+            'name'    => sanitize_text_field( $name ),
+            'email'   => sanitize_email( $email ),
+            'phone'   => sanitize_text_field( $phone ),
+            'website' => esc_url( $website_url ),
+            'address' => sanitize_text_field( $address ),
+            'message' => sanitize_text_field( $message ),
+        ];
+
+        return $data;
     }
     
 }
