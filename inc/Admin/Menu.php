@@ -36,6 +36,12 @@ class Menu{
     }
 
     public function _cb_contact_info(){
-        echo 'hello world';
+        echo '<div class="wrap"><h1>Contact Info</h1>';
+
+        $contact_info_list_table = new ContactInfoListTable;
+        $contact_info_list_table->prepare_items();
+        $contact_info_list_table->display();
+        
+        echo '</div>';
     }
 }
