@@ -34,6 +34,7 @@ class Contacts extends WP_REST_Controller{
      */
     public function register_routes(){
 
+        // create route for data insert & get
         register_rest_route(
             $this->namespace,        // namespace
             '/' . $this->rest_base,  // route
@@ -51,6 +52,7 @@ class Contacts extends WP_REST_Controller{
             ]
         );
 
+        // create route for data update & delete
         register_rest_route( 
             $this->namespace,
             '/' . $this->rest_base . '/(?P<id>\d+)',
@@ -74,11 +76,11 @@ class Contacts extends WP_REST_Controller{
      * delete item
      *
      * @param [type] $request
-     * @return void
+     * @return string
      */
     public function delete_item( $request ){
         global $wpdb;
-        $table  = $wpdb->prefix . 'contact_info';
+        $table  = $this->get_table();
         $id     = (int)$request['id'];
 
         $where_clause        = [ 'id' => $id ];
@@ -97,11 +99,11 @@ class Contacts extends WP_REST_Controller{
      * data update
      *
      * @param [type] $request
-     * @return void
+     * @return string
      */
     public function update_item( $request ){
         global $wpdb;
-        $table  = $wpdb->prefix . 'contact_info';
+        $table  = $this->get_table();
         $params = $request->get_params();
         $id     = (int)$request['id'];
 
@@ -133,10 +135,16 @@ class Contacts extends WP_REST_Controller{
         
     }
 
+    /**
+     * insert item into database
+     *
+     * @param [type] $request
+     * @return string
+     */
     public function insert_item( $request ){
         global $wpdb;
 
-        $table = $wpdb->prefix . 'contact_info';
+        $table = $this->get_table();
 
         $params = $request->get_params();
 
@@ -180,7 +188,7 @@ class Contacts extends WP_REST_Controller{
 
         global $wpdb;
 
-        $table = $wpdb->prefix . 'contact_info';
+        $table = $this->get_table();
         
         $sql = "SELECT * FROM $table ORDER BY id DESC";
 
@@ -202,6 +210,5 @@ class Contacts extends WP_REST_Controller{
         $table = $wpdb->prefix . 'contact_info';
         return $table;
     }
-    
     
 }
