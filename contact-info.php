@@ -12,7 +12,7 @@ require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 
 use Contact\Inc\Assets;
 use Contact\Inc\Api\Api as Contact_Api;
-
+use Contact\Inc\Admin\Menu as Admin_Menu;
 /**
  * create ContactInfo class
  * @version 1.0
@@ -41,6 +41,9 @@ final class ContactInfo{
 
         // create table called contact_info
         register_activation_hook( __FILE__, [ $this, 'create_table_contact_info' ] );
+
+        // initiate admin menu
+        new Admin_Menu;
     }
 
     /**
