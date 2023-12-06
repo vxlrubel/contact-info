@@ -34,7 +34,7 @@ class Contacts extends WP_REST_Controller{
      */
     public function register_routes(){
 
-        register_rest_route( 
+        register_rest_route(
             $this->namespace,        // namespace
             '/' . $this->rest_base,  // route
             [
@@ -59,10 +59,38 @@ class Contacts extends WP_REST_Controller{
                     'methods'             => WP_REST_Server::EDITABLE,
                     'callback'            => [ $this, 'update_item' ],
                     'permission_callback' => [ $this, 'get_items_permission_check' ],
-                ]
+                ],
+                [
+                    'methods'             => WP_REST_Server::DELETABLE,
+                    'callback'            => [ $this, 'delete_item' ],
+                    'permission_callback' => [ $this, 'get_items_permission_check' ],
+                ],
             ]
         );
         
+    }
+
+    /**
+     * delete item
+     *
+     * @param [type] $request
+     * @return void
+     */
+    public function delete_item( $request ){
+        global $wpdb;
+        $table  = $wpdb->prefix . 'contact_info';
+        $id     = (int)$request['id'];
+
+        $where_clause        = [ 'id' => $id ];
+        $where_clause_format = ['%d'];
+        
+        $delete_result = $wpdb->delete( $table, $where_clause, $where_clause_format );
+
+        if ( $delete_result === false ){
+            return new WP_Error('failed_delete', 'Failed to delete data', array('status' => 500));
+        }
+
+        return 'delete data successfully';
     }
 
     /**
