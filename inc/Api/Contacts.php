@@ -52,6 +52,19 @@ class Contacts extends WP_REST_Controller{
             ]
         );
 
+        // register route for single item retrive
+        register_rest_route(
+            $this->namespace,
+            '/' . $this->rest_base . '/(?P<id>\d+)',
+            [
+                [
+                    'methods'             => WP_REST_Server::READABLE,
+                    'callback'            => [ $this, 'get_single_item' ],
+                    'permission_callback' => [ $this, 'get_items_permission_check' ],
+                ]
+            ]
+        );
+
         // create route for data update & delete
         register_rest_route( 
             $this->namespace,
