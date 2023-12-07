@@ -86,6 +86,33 @@ class Contacts extends WP_REST_Controller{
     }
 
     /**
+     * get single item
+     *
+     * @param [type] $request
+     * @return void
+     */
+    public function get_single_item( $request ){
+        global $wpdb;
+        $table = $this->get_table();
+
+        $params = $request->get_params();
+        $id     = (int)$params['id'];
+
+        $get_query = "SELECT * FROM $table WHERE id = $id";
+        
+        $result = $wpdb->get_results( $get_query );
+
+        $result_count  = count( $result );
+
+        if( $result_count === 0 ){
+            return 'No result found';
+        }
+
+        return $result;
+
+    }
+
+    /**
      * insert item into database
      *
      * @param [type] $request
