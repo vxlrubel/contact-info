@@ -37,7 +37,8 @@ if ( ! class_exists('WP_List_Table') ){
      */
     public function get_columns(){
         $columns = [
-            'cb' => '<input type="checkbox" />',
+            'cb'      => '<input type="checkbox" />',
+            'id'      => 'ID',
             'name'    => 'Name',
             'email'   => 'Email',
             'phone'   => 'Phone',
@@ -84,46 +85,6 @@ if ( ! class_exists('WP_List_Table') ){
             // Add more bulk actions as needed
         );
         return $actions;
-    }
-
-
-    // Handle bulk action submission
-    public function process_bulk_action() {
-        if ('delete' === $this->current_action()) {
-            $contact_ids = isset($_REQUEST['contact']) ? $_REQUEST['contact'] : array();
-
-            if (!empty($contact_ids)) {
-                foreach ($contact_ids as $contact_id) {
-                    $this->delete_contact($contact_id);
-                }
-            }
-        }
-    }
-
-    private function delete_contact($contact_id) {
-        // Your logic to delete a contact
-
-        print_r( $contact_id );
-        
-    }
-
-    public function column_name($item) {
-        $actions = array(
-            'edit' => sprintf('<a href="?page=%s&action=%s&contact=%s">Edit</a>', $_REQUEST['page'], 'edit', $item['id']),
-            'delete' => sprintf('<a href="?page=%s&action=%s&contact=%s">Delete</a>', $_REQUEST['page'], 'delete', $item['id']),
-            // Add more row actions as needed
-        );
-
-        return sprintf('%1$s <span style="display:none;">%2$s</span>%3$s',
-            $item['name'],
-            $this->row_actions($actions),
-            $this->handle_row_actions($item, 'name', $actions)
-        );
-    }
-    
-
-
-
-    
+    } 
     
  }
