@@ -96,9 +96,12 @@ if ( ! class_exists('WP_List_Table') ){
     public function get_sortable_columns(){
 
         $sortable_columns = [
-            'name'  => [ 'name', false ],
-            'email' => [ 'email', false ],
-            'phone' => [ 'phone', false ],
+            'name'    => [ 'name', false ],
+            'email'   => [ 'email', false ],
+            'phone'   => [ 'phone', false ],
+            'website' => [ 'website', false ],
+            'address' => [ 'address', false ],
+            'message' => [ 'message', false ],
         ];
 
         return $sortable_columns;
@@ -116,7 +119,11 @@ if ( ! class_exists('WP_List_Table') ){
 
         $data = $wpdb->get_results( "SELECT * FROM $table_name ORDER BY $order_by $order", ARRAY_A );
 
-        return $data;
+        if ( $data > 0 ){
+            return $data;
+        }
+
+        return 'no data available';
     }
 
     /**
