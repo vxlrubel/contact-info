@@ -40,6 +40,11 @@ class Menu{
 
         $contact_info_list_table = new ContactInfoListTable;
         $contact_info_list_table->prepare_items();
+
+        echo "<form method=\"POST\" name=\"contact_info_search_form\" action=\"{$_SERVER['PHP_SELF']}?page=contact-info\">";
+        $contact_info_list_table->search_box( 'Search', 'search_contact_info' );
+        echo '</form>';
+        
         $contact_info_list_table->display();
         
         echo '</div>';
