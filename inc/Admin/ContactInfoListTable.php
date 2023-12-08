@@ -57,6 +57,11 @@ if ( ! class_exists('WP_List_Table') ){
         );
     }
 
+    /**
+     * prepare items
+     *
+     * @return void
+     */
     public function prepare_items(){
         $columns = $this->get_columns();       // get the column
         $data    = $this->get_contact_data();  // get contact data
@@ -69,12 +74,30 @@ if ( ! class_exists('WP_List_Table') ){
         $this->items = $data;
     }
 
+
+    /**
+     * hide table columns
+     *
+     * @return void
+     */
     public function get_hidden_columns(){
         return [ 'id', 'address', 'message' ];
     }
 
-    public function get_sortable_columns(){}
+    /**
+     * get sortable value in list table
+     *
+     * @return void
+     */
+    public function get_sortable_columns(){
 
+    }
+
+    /**
+     * get the list data
+     *
+     * @return void
+     */
     private function get_contact_data(){
         global $wpdb;
         $table_name = $wpdb->prefix . 'contact_info'; // Replace with your table name
@@ -84,6 +107,13 @@ if ( ! class_exists('WP_List_Table') ){
         return $data;
     }
 
+    /**
+     * default columns
+     *
+     * @param [type] $item
+     * @param [type] $column_name
+     * @return void
+     */
     public function column_default( $item, $column_name ) {
         
         switch ( $column_name ) {
@@ -106,7 +136,11 @@ if ( ! class_exists('WP_List_Table') ){
         
     }
 
-    // Add bulk actions
+    /**
+     * add bulk action
+     *
+     * @return void
+     */
     public function get_bulk_actions() {
         $actions = array(
             'delete' => 'Move to trash',
