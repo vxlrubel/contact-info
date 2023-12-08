@@ -71,12 +71,25 @@ if ( ! class_exists('WP_List_Table') ){
         $columns = $this->get_columns();       // get the column
         $data    = $this->get_contact_data( $order_by, $order, $search_term );  // get contact data
 
+        $item_per_page = 3;
+        $current_page  = $this->get_pagenum();
+        $total_items   = count( $data );
+
+        $this->set_pagination_args(
+            [
+				'total_items' => $total_items,
+				'per_page'    => $item_per_page,
+            ]
+        );
+
+        $slice_data = array_slice( $data, ( ( $current_page - 1 ) * $item_per_page ), $item_per_page );
+        
         $hidden_columns = $this->get_hidden_columns();
         $sortable_columns = $this->get_sortable_columns();
 
         // $this->_column_headers = array($columns, array(), array());
         $this->_column_headers = [ $columns, $hidden_columns, $sortable_columns ];
-        $this->items = $data;
+        $this->items = $slice_data;
     }
 
 
