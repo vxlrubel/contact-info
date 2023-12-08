@@ -68,8 +68,10 @@ if ( ! class_exists('WP_List_Table') ){
         $order       = isset( $_GET['order'] ) ? trim( $_GET['order'] ) : 'desc';
         $search_term = isset( $_POST['s'] ) ? trim( $_POST['s'] ) : '';
         
-        $columns = $this->get_columns();       // get the column
-        $data    = $this->get_contact_data( $order_by, $order, $search_term );  // get contact data
+        // get columns
+        $columns = $this->get_columns();
+        // get data
+        $data    = $this->get_contact_data( $order_by, $order, $search_term );
 
         $item_per_page = 3;
         $current_page  = $this->get_pagenum();
