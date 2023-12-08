@@ -9,7 +9,7 @@ class ContactForm{
     public function edit_form(){
         ?>
 
-            <form action="">
+            <form action="" class="contact-info-form">
 
                 <div class="item-row">
                     <label for="name">Name:</label>
