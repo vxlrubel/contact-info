@@ -50,7 +50,7 @@ if ( ! class_exists('WP_List_Table') ){
         return $columns;
     }
 
-    public function column_cb($item) {
+    public function column_cb( $item ) {
         return sprintf(
             '<input type="checkbox" name="contact[]" value="%s" />',
             $item['name']
@@ -61,9 +61,19 @@ if ( ! class_exists('WP_List_Table') ){
         $columns = $this->get_columns();       // get the column
         $data    = $this->get_contact_data();  // get contact data
 
-        $this->_column_headers = array($columns, array(), array());
+        $hidden_columns = $this->get_hidden_columns();
+        $sortable_columns = $this->get_sortable_columns();
+
+        // $this->_column_headers = array($columns, array(), array());
+        $this->_column_headers = [ $columns, $hidden_columns ];
         $this->items = $data;
     }
+
+    public function get_hidden_columns(){
+        return [ 'id', 'address', 'message' ];
+    }
+
+    public function get_sortable_columns(){}
 
     private function get_contact_data(){
         global $wpdb;
@@ -74,8 +84,26 @@ if ( ! class_exists('WP_List_Table') ){
         return $data;
     }
 
-    public function column_default($item, $column_name) {
-        return $item[$column_name];
+    public function column_default( $item, $column_name ) {
+        
+        switch ( $column_name ) {
+            case 'id':
+            case 'name':
+            case 'email':
+            case 'phone':
+            case 'website':
+            case 'address':
+            case 'message':
+            case 'created_at':
+            case 'updated_at':
+
+                return $item[ $column_name ];
+
+            default:
+
+                return 'No value';
+        }
+        
     }
 
     // Add bulk actions
