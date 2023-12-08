@@ -53,7 +53,7 @@ if ( ! class_exists('WP_List_Table') ){
     public function column_cb( $item ) {
         return sprintf(
             '<input type="checkbox" name="contact[]" value="%s" />',
-            $item['name']
+            $item['id']
         );
     }
 
@@ -199,10 +199,10 @@ if ( ! class_exists('WP_List_Table') ){
      * @return void
      */
     public function get_bulk_actions() {
-        $actions = array(
-            'delete' => 'Move to trash',
-            // Add more bulk actions as needed
-        );
+        $actions = [
+            'edit'   => 'Edit',
+            'delete' => 'Delete',
+        ];
         return $actions;
     } 
     
