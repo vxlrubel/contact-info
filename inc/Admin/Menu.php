@@ -36,17 +36,28 @@ class Menu{
     }
 
     public function _cb_contact_info(){
+
+        $action = isset( $_GET['action'] ) ? trim( $_GET['action'] ) : '';
+
         echo '<div class="wrap"><h1>Contact Info</h1>';
 
-        $contact_info_list_table = new ContactInfoListTable;
-        $contact_info_list_table->prepare_items();
+        if( $action == 'contact-info-edit' ){
+            $contact_id = isset( $_GET['contact_info_id'] ) ? (int)$_GET['contact_info_id'] : '';
 
-        echo "<form method=\"POST\" name=\"contact_info_search_form\" action=\"{$_SERVER['PHP_SELF']}?page=contact-info\">";
-        $contact_info_list_table->search_box( 'Search', 'search_contact_info' );
-        echo '</form>';
-        
-        $contact_info_list_table->display();
-        
-        echo '</div>';
+            $contact_info_form = new ContactForm;
+            $contact_info_form->edit_form();
+            
+        }else{
+            $contact_info_list_table = new ContactInfoListTable;
+            $contact_info_list_table->prepare_items();
+    
+            echo "<form method=\"POST\" name=\"contact_info_search_form\" action=\"{$_SERVER['PHP_SELF']}?page=contact-info\">";
+            $contact_info_list_table->search_box( 'Search', 'search_contact_info' );
+            echo '</form>';
+    
+            $contact_info_list_table->display();
+            
+            echo '</div>';
+        }
     }
 }
