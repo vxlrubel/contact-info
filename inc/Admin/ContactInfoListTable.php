@@ -63,14 +63,18 @@ if ( ! class_exists('WP_List_Table') ){
      * @return void
      */
     public function prepare_items(){
+
+        $order_by = isset( $_GET['orderby'] ) ? $_GET['orderby'] : 'name';
+        $order = isset( $_GET['order'] ) ? $_GET['order'] : 'desc';
+        
         $columns = $this->get_columns();       // get the column
-        $data    = $this->get_contact_data();  // get contact data
+        $data    = $this->get_contact_data( $order_by, $order );  // get contact data
 
         $hidden_columns = $this->get_hidden_columns();
         $sortable_columns = $this->get_sortable_columns();
 
         // $this->_column_headers = array($columns, array(), array());
-        $this->_column_headers = [ $columns, $hidden_columns ];
+        $this->_column_headers = [ $columns, $hidden_columns, $sortable_columns ];
         $this->items = $data;
     }
 
@@ -91,6 +95,14 @@ if ( ! class_exists('WP_List_Table') ){
      */
     public function get_sortable_columns(){
 
+        $sortable_columns = [
+            'name'  => [ 'name', false ],
+            'email' => [ 'email', false ],
+            'phone' => [ 'phone', false ],
+        ];
+
+        return $sortable_columns;
+
     }
 
     /**
@@ -98,11 +110,11 @@ if ( ! class_exists('WP_List_Table') ){
      *
      * @return void
      */
-    private function get_contact_data(){
+    private function get_contact_data( $order_by = 'name', $order = 'DESC' ){
         global $wpdb;
         $table_name = $wpdb->prefix . 'contact_info'; // Replace with your table name
 
-        $data = $wpdb->get_results("SELECT * FROM $table_name", ARRAY_A);
+        $data = $wpdb->get_results( "SELECT * FROM $table_name ORDER BY $order_by $order", ARRAY_A );
 
         return $data;
     }
