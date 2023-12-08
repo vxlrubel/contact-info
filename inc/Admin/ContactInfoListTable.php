@@ -64,11 +64,12 @@ if ( ! class_exists('WP_List_Table') ){
      */
     public function prepare_items(){
 
-        $order_by = isset( $_GET['orderby'] ) ? $_GET['orderby'] : 'name';
-        $order = isset( $_GET['order'] ) ? $_GET['order'] : 'desc';
+        $order_by    = isset( $_GET['orderby'] ) ? trim( $_GET['orderby'] ) : 'name';
+        $order       = isset( $_GET['order'] ) ? trim( $_GET['order'] ) : 'desc';
+        $search_term = isset( $_POST['s'] ) ? trim( $_POST['s'] ) : '';
         
         $columns = $this->get_columns();       // get the column
-        $data    = $this->get_contact_data( $order_by, $order );  // get contact data
+        $data    = $this->get_contact_data( $order_by, $order, $search_term );  // get contact data
 
         $hidden_columns = $this->get_hidden_columns();
         $sortable_columns = $this->get_sortable_columns();
@@ -85,7 +86,7 @@ if ( ! class_exists('WP_List_Table') ){
      * @return void
      */
     public function get_hidden_columns(){
-        return [ 'id', 'address', 'message' ];
+        return [ 'id', 'website', 'message' ];
     }
 
     /**
@@ -97,11 +98,11 @@ if ( ! class_exists('WP_List_Table') ){
 
         $sortable_columns = [
             'name'    => [ 'name', false ],
-            'email'   => [ 'email', false ],
-            'phone'   => [ 'phone', false ],
-            'website' => [ 'website', false ],
-            'address' => [ 'address', false ],
-            'message' => [ 'message', false ],
+            'email'   => [ 'email', true ],
+            'phone'   => [ 'phone', true ],
+            'website' => [ 'website', true ],
+            'address' => [ 'address', true ],
+            'message' => [ 'message', true ],
         ];
 
         return $sortable_columns;
@@ -113,17 +114,24 @@ if ( ! class_exists('WP_List_Table') ){
      *
      * @return void
      */
-    private function get_contact_data( $order_by = 'name', $order = 'DESC' ){
+    private function get_contact_data( $order_by = 'name', $order = 'DESC', $search_term = '' ){
         global $wpdb;
         $table_name = $wpdb->prefix . 'contact_info'; // Replace with your table name
 
-        $data = $wpdb->get_results( "SELECT * FROM $table_name ORDER BY $order_by $order", ARRAY_A );
+        if( ! empty( $search_term ) ){
+            $search_query  = "SELECT * FROM $table_name WHERE name LIKE '%$search_term%' OR email LIKE '%$search_term%' OR phone LIKE '%$search_term%' OR address LIKE '%$search_term%'";
+            $search_result = $wpdb->get_results( $search_query, ARRAY_A );
+            return $search_result;
+        }else{
+            $data = $wpdb->get_results( "SELECT * FROM $table_name ORDER BY $order_by $order", ARRAY_A );
 
-        if ( $data > 0 ){
-            return $data;
+            if ( $data > 0 ){
+                return $data;
+            }
+    
+            return 'no data available';
         }
-
-        return 'no data available';
+        
     }
 
     /**
