@@ -1,0 +1,20 @@
+.contact-info-form,
+.contact-info-form *{
+    box-sizing: border-box;
+}
+.contact-info-form {
+	max-width: 500px;
+	margin: 25px 0 0;
+	border: 2px solid #dee2e6;
+	padding: 25px 35px;
+	background: white;
+}
+.contact-info-form .item-row:not(:last-child){
+    margin-bottom: 15px;
+}
+.contact-info-form .item-row textarea,
+.contact-info-form .item-row input:not([type="submit"]){
+    display: block;
+    width: 100%;
+    margin-top: 3px;
+}
