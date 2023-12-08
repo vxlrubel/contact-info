@@ -39,15 +39,17 @@ class Menu{
 
         $action = isset( $_GET['action'] ) ? trim( $_GET['action'] ) : '';
 
-        echo '<div class="wrap"><h1>Contact Info</h1>';
+        echo '<div class="wrap contact-info-parent">';
 
         if( $action == 'contact-info-edit' ){
-            $contact_id = isset( $_GET['contact_info_id'] ) ? (int)$_GET['contact_info_id'] : '';
+            $edit_id = isset( $_GET['contact_info_id'] ) ? (int)$_GET['contact_info_id'] : '';
 
+            echo '<h1>Edit Contact Information</h1>';
             $contact_info_form = new ContactForm;
-            $contact_info_form->edit_form();
+            $contact_info_form->edit_form( $edit_id );
             
         }else{
+            echo '<h1>Contact Info</h1>';
             $contact_info_list_table = new ContactInfoListTable;
             $contact_info_list_table->prepare_items();
     
@@ -56,8 +58,9 @@ class Menu{
             echo '</form>';
     
             $contact_info_list_table->display();
-            
-            echo '</div>';
         }
+
+        echo '</div>';
+
     }
 }

@@ -66,7 +66,7 @@ class Assets{
         );
 
         $data = [
-            'rest_url' => esc_url_raw( rest_url() ),
+            'rest_url' => esc_url_raw( rest_url('ci/v1/contactinfo') ),
             'nonce'    => 'ci_rest_nonce'
         ];
         

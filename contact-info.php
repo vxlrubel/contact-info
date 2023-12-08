@@ -30,6 +30,9 @@ final class ContactInfo{
     private $table = 'contact_info';
 
     public function __construct(){
+
+        $access_token = md5(uniqid(rand(), true));
+
         // define constant
         $this->define_constant();
 
@@ -44,6 +47,9 @@ final class ContactInfo{
 
         // initiate admin menu
         new Admin_Menu;
+
+        // generate access tocken
+        update_option( 'contact_info_access_token', 'contact_info_access_token' );
     }
 
     /**
