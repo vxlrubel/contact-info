@@ -20,4 +20,3 @@ class AjaxAction {
     }
 
 }
-new AjaxAction;
