@@ -179,9 +179,25 @@ if ( ! class_exists('WP_List_Table') ){
     }
 
     public function column_name( $item ){
+
+        $edit_link = sprintf(
+            '<a href="?page=%s&action=%s&contact_info_id=%s" class="contact_info_edit">Edit</a>',
+            $_GET['page'],
+            'contact-info-edit',
+            $item['id'],
+        );
+
+        $del_link = sprintf(
+            '<a href="?page=%s&action=%s&contact_info_id=%s" class="contact_info_delete" data-id="%s">Delete</a>',
+            $_GET['page'],
+            'contact-info-delete',
+            $item['id'],
+            $item['id']
+
+        );
         $action = [
-            'edit'   => sprintf( '<a href="?page=%s&action=%s&contact_info_id=%s" class="contact_info_edit">Edit</a>', $_GET['page'], 'contact-info-edit', $item['id'] ),
-            'delete' => sprintf( '<a href="?page=%s&action=%s&contact_info_id=%s" class="contact_info_delete">Delete</a>', $_GET['page'], 'contact-info-delete', $item['id'] ),
+            'edit'   => $edit_link,
+            'delete' => $del_link,
         ];
 
         $placeholder = sprintf(
