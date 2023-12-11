@@ -11,6 +11,7 @@ defined('ABSPATH') || exit;
 require_once dirname( __FILE__ ) . '/vendor/autoload.php';
 
 use Contact\Inc\Assets;
+use Contact\Inc\AjaxAction as Contact_Ajax_Action;
 use Contact\Inc\Api\Api as Contact_Api;
 use Contact\Inc\Admin\Menu as Admin_Menu;
 /**
@@ -38,6 +39,8 @@ final class ContactInfo{
 
         // load scripts file for frontend and dashboard
         new Assets;
+
+        new Contact_Ajax_Action;
 
         // initiate contact api
         new Contact_Api;
