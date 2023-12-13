@@ -65,6 +65,11 @@ class Menu{
         );
     }
 
+    /**
+     * add new contact form which is allow to create a new contact
+     *
+     * @return void
+     */
     public function add_new_contact(){
         $form = new ContactForm;
         
