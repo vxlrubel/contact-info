@@ -39,6 +39,16 @@ class Menu{
 
         add_submenu_page(
             $this->slug_parent,           // parent slug
+            'contact-list',               // page title
+            'Contact List',               // menu title
+            'manage_options',             // capability
+            $this->slug_parent,           // menu slug
+            [ $this, '_cb_contact_info' ] // callback
+        );
+
+
+        add_submenu_page(
+            $this->slug_parent,           // parent slug
             'add-new-contact',            // page title
             'Add New',                    // menu title
             'manage_options',             // capability
