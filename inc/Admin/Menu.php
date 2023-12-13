@@ -81,6 +81,11 @@ class Menu{
         echo '</div>';
     }
 
+    /**
+     * show the contact list
+     *
+     * @return void
+     */
     public function _cb_contact_info(){
 
         $action = isset( $_GET['action'] ) ? trim( $_GET['action'] ) : '';
