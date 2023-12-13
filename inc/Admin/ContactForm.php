@@ -58,4 +58,48 @@ class ContactForm{
 
         <?php endforeach;
     }
+
+    public function add_new_form(){
+        ?>
+
+            <form action="javascript:void(0)" class="contact-info-form">
+
+                <div class="item-row">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name">
+                </div>
+
+                <div class="item-row">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email">
+                </div>
+
+                <div class="item-row">
+                    <label for="phone">Phone:</label>
+                    <input type="number" id="phone" min="1" name="phone">
+                </div>
+
+                <div class="item-row">
+                    <label for="website">Website:</label>
+                    <input type="url" id="website" name="website">
+                </div>
+
+                <div class="item-row">
+                    <label for="address">Address:</label>
+                    <textarea id="address"rows="2" name="address"></textarea>
+                </div>
+
+                <div class="item-row">
+                    <label for="message">Message:</label>
+                    <textarea id="message"rows="5" name="message"></textarea>
+                </div>
+
+                <div class="item-row">
+                    <input type="submit" value="Save Changes" class="button button-primary" id="add-contact-item" data-edit="<?php echo $result['id'];?>">
+                </div>
+
+            </form>
+
+        <?php
+    }
 }
