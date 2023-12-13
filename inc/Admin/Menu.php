@@ -21,10 +21,16 @@ class Menu{
 
     // add new slug
     protected $slug_add_new = 'add-contact-info';
+
+    // contact setting slug
+    protected $slug_settings = 'contact-info-settings';
     
     public function __construct() {
         // create admin menu
         add_action( 'admin_menu', [ $this, 'admin_menu_contact_info' ], 15 );
+
+        // add setting options
+        new ContactSettings;
     }
 
     /**
@@ -63,7 +69,38 @@ class Menu{
             $this->slug_add_new,          // menu slug
             [ $this, 'add_new_contact' ]  // callback
         );
+        // submenu
+        add_submenu_page(
+            $this->slug_parent,            // parent slug
+            'contact-settings',            // page title
+            'Settings',                    // menu title
+            'manage_options',              // capability
+            $this->slug_settings,          // menu slug
+            [ $this, 'contact_settings' ]  // callback
+        );
     }
+
+
+    public function contact_settings(){
+        printf('<div class="%s">', 'wrap contact-form-settings' );
+
+        printf( '<h2>%s</h2>', 'General Settings' );
+
+        echo '<form method="POST" action="options.php">';
+        
+        settings_errors();
+
+        settings_fields( 'contact_info_group' );
+
+        do_settings_fields( 'contact-info_page', 'contact_info_group' );
+
+        submit_button();
+
+        echo '</form>';
+        
+        echo '</div>';
+    }
+
 
     /**
      * add new contact form which is allow to create a new contact
