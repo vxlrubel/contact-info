@@ -23,10 +23,17 @@ class Menu{
     protected $slug_add_new = 'add-contact-info';
     
     public function __construct() {
+        // create admin menu
         add_action( 'admin_menu', [ $this, 'admin_menu_contact_info' ], 15 );
     }
 
+    /**
+     * create admin menu
+     *
+     * @return void
+     */
     public function admin_menu_contact_info(){
+        // main menu
         add_menu_page( 
             'Contact Info',                 // page title
             'Contact Info',                 // menu title
@@ -37,6 +44,7 @@ class Menu{
             25                              // position
         );
 
+        // submenu
         add_submenu_page(
             $this->slug_parent,           // parent slug
             'contact-list',               // page title
@@ -46,7 +54,7 @@ class Menu{
             [ $this, '_cb_contact_info' ] // callback
         );
 
-
+        // submenu
         add_submenu_page(
             $this->slug_parent,           // parent slug
             'add-new-contact',            // page title
