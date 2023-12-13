@@ -30,7 +30,7 @@ class Menu{
             'manage_options',               // capability
             $this->slug_parent,             // menu slug
             [ $this, '_cb_contact_info' ],  // callback
-            'dashicons-email',              // icon
+            'dashicons-phone',              // icon
             25                              // position
         );
     }
