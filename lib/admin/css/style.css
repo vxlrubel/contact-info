@@ -18,3 +18,14 @@
     width: 100%;
     margin-top: 3px;
 }
+.contact-form-settings form {
+    margin-top: 30px;
+}
+.contact-form-settings .items:not(:last-child) {
+	margin: 0 0 30px;
+}
+.contact-form-settings .items label{
+    display: inline-block;
+    min-width: 150px;
+
+}
