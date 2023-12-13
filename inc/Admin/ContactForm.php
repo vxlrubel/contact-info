@@ -62,7 +62,7 @@ class ContactForm{
     public function add_new_form(){
         ?>
 
-            <form action="javascript:void(0)" class="contact-info-form">
+            <form action="javascript:void(0)" class="contact-info-form" id="add_new-contact">
 
                 <div class="item-row">
                     <label for="name">Name:</label>
