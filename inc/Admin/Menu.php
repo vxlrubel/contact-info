@@ -18,6 +18,9 @@ class Menu{
 
     // main slug
     protected $slug_parent = 'contact-info';
+
+    // add new slug
+    protected $slug_add_new = 'add-contact-info';
     
     public function __construct() {
         add_action( 'admin_menu', [ $this, 'admin_menu_contact_info' ], 15 );
@@ -32,6 +35,15 @@ class Menu{
             [ $this, '_cb_contact_info' ],  // callback
             'dashicons-phone',              // icon
             25                              // position
+        );
+
+        add_submenu_page(
+            $this->slug_parent,           // parent slug
+            'add-new-contact',            // page title
+            'Add New',                    // menu title
+            'manage_options',             // capability
+            $this->slug_add_new,          // menu slug
+            [ $this, 'add_new_contact' ]  // callback
         );
     }
 
