@@ -47,6 +47,17 @@ class Menu{
         );
     }
 
+    public function add_new_contact(){
+        $form = new ContactForm;
+        
+        echo '<div class="wrap">';
+        printf( '<h2>%s</h2>', 'Add New Contact' );
+        
+        $form->add_new_form();
+        
+        echo '</div>';
+    }
+
     public function _cb_contact_info(){
 
         $action = isset( $_GET['action'] ) ? trim( $_GET['action'] ) : '';
