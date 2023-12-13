@@ -95,6 +95,8 @@ class ContactForm{
                 </div>
 
                 <div class="item-row">
+                    <input type="hidden" name="action" value="add_new_contact">
+                    <?php wp_nonce_field( 'contact_info' ); ?>
                     <input type="submit" value="Save Changes" class="button button-primary" id="add-contact-item" data-edit="<?php echo $result['id'];?>">
                 </div>
 
