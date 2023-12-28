@@ -47,7 +47,7 @@ class Contacts extends WP_REST_Controller{
                 [
                     'methods'             => WP_REST_Server::CREATABLE,
                     'callback'            => [ $this, 'insert_item' ],
-                    'permission_callback' => [ $this, 'get_items_permission_check' ],
+                    'permission_callback' => [ $this, '_check_insert_permission' ],
                 ],
             ]
         );
@@ -222,6 +222,14 @@ class Contacts extends WP_REST_Controller{
         return $permission;
     }
 
+    /**
+     * check insert permission
+     *
+     * @return void
+     */
+    public function _check_insert_permission(){
+        return true;
+    }
 
     /**
      * get database table name
